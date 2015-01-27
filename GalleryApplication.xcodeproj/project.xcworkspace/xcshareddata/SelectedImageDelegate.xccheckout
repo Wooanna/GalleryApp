@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EF672AFE-6CD0-406D-B18D-C54B36895535</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SelectedImageDelegate</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</key>
+		<string>https://github.com/Wooanna/SelectedImageDelegate.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SelectedImageDelegate.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Wooanna/SelectedImageDelegate.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SelectedImageDelegate</string>
+		</dict>
+	</array>
+</dict>
+</plist>
