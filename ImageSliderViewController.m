@@ -52,7 +52,6 @@ int const CELL_MARGIN = 20;
     //collectionview
     _layout = [[UICollectionViewFlowLayout alloc] init];
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, _cellSize + 2* CELL_MARGIN) collectionViewLayout:_layout];
-    _collectionView.bounces = NO;
     [_collectionView setDataSource:self];
     [_collectionView setDelegate:self];
     [_layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
@@ -63,7 +62,7 @@ int const CELL_MARGIN = 20;
     [self.view addSubview:_collectionView];
     
     _imageViewer = [[ImageViewer alloc] init];
-    _imageViewer.animationType = PanGesture;
+    _imageViewer.animationType = AnimationTypePanGesture;
     _imageViewer.view.frame = CGRectMake(0, _collectionView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _collectionView.frame.size.height);
     [_imageViewer setData:_data];
     [self.view addSubview:_imageViewer.view];
@@ -71,7 +70,6 @@ int const CELL_MARGIN = 20;
 
 -(void)setData:(NSMutableArray*)data
 {
-    NSLog(@"setdata");
     _data = data;
 }
 
@@ -120,8 +118,7 @@ int const CELL_MARGIN = 20;
     
     [_trgt performSelector:_str withObject: datasetCell.photo];
     
-    
-    [_imageViewer setImage:indexPath.section];
+    [_imageViewer setImage:(int)indexPath.section];
    
 }
 

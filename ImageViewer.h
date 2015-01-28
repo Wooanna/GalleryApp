@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, AnimationType)
+{
+    AnimationTypeFadeInFadeOut,
+    AnimationTypeSlideInNewPicture,
+    AnimationTypePanGesture
+    
+};
+
 @interface ImageViewer : UIViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIView* centralImage;
-
-typedef NS_ENUM(NSInteger, AnimationType)
-{
-    FadeInFadeOut,
-    SlideInNewPicture,
-    PanGesture
-
-};
 
 @property (nonatomic, assign) AnimationType animationType;
 

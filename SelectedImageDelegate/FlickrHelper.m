@@ -55,7 +55,7 @@
         else{
             NSData* jsonData = [searchResultString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
             
-            NSDictionary* resultDict = [NSJSONSerialization JSONObjectWithData:jsonData options:nil error:&error];
+            NSDictionary* resultDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
             
             if(error != nil){
                 completion(string, nil, error);
@@ -82,7 +82,7 @@
                         photo.secret = [photoDictionary objectForKey:@"secret"];
                         
                         NSString* searchURL = [self URLForFlickrPhotoWithPhoto:photo andSize:@"s"];
-                        NSData* imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:searchURL] options:nil error:&error];
+                        NSData* imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:searchURL] options:1 error:&error];
                         UIImage* image = [UIImage imageWithData:imageData];
                         
                         photo.thumbnail = image;

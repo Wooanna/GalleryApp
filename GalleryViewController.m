@@ -117,7 +117,7 @@ static NSString * const PhotoCellIdentifier = @"PhotoCell";
 
 -(UIView*)customize:(UIView*)view
 {
-    NSNumber* rotationAngle =_rotations[arc4random_uniform(_rotations.count)];
+    NSNumber* rotationAngle =_rotations[arc4random_uniform((int)_rotations.count)];
     CGFloat angle = 2* M_PI * [rotationAngle floatValue];
     CATransform3D transform = CATransform3DMakeRotation(angle, 0.0f, 0.0f, 1.0f);
     view.layer.transform = transform;
