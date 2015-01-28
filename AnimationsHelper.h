@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@interface AnimationsHelper : NSObject 
+@interface AnimationsHelper : NSObject
+
+
 
 -(void)fadeInView:(CALayer*)layer withDuration:(int)duration;
 

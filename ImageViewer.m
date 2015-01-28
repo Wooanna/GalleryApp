@@ -18,36 +18,36 @@
     UIView *_leftImageForPanning;
     UIView *_rightImageForPanning;
     UIPanGestureRecognizer *_panGesture;
+    NSArray *_data;
 }
 
 const int OFFSET = 250;
 
--(instancetype)initWithFrame:(CGRect)frame
+
+-(id)init
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if(self){
-        self.centralImage = [[UIView alloc] initWithFrame:[self calcPercentageOfFrame:frame]];
+        
+    }
+    return self;
+}
+
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+        self.centralImage = [[UIView alloc] initWithFrame:[self calcPercentageOfFrame:self.view.frame]];
         
         if(self.animationType == SlideInNewPicture){
             _secondImage =
             [[UIView alloc] initWithFrame:CGRectMake(self.centralImage.frame.origin.x - OFFSET, self.centralImage.frame.origin.y, self.centralImage.frame.size.width, self.centralImage.frame.size.height)];
-            [self addSubview:_secondImage];
-        }
+            [self.view addSubview:_secondImage];
+        }else if(self.animationType == PanGesture){
+          [self createHelperImagesForPanning];
         
-        if(self.animationType == PanGesture){
-            //CREATE TWO VIEWS LEFT AND RIGHT OF THE CENTRAL ONE SO THEY CAN COME WHEN YOU PAN THE CENTRAL IMAGE
-            _leftImageForPanning = [[UIView alloc] initWithFrame:CGRectMake(self.centralImage.frame.origin.x - (self.centralImage.frame.size.width * 2), self.centralImage.frame.origin.y, self.centralImage.frame.size.width, self.centralImage.frame.size.height)];
-            
-            _rightImageForPanning = [[UIView alloc] initWithFrame:CGRectMake(self.centralImage.frame.origin.x - (-self.centralImage.frame.size.width * 2), self.centralImage.frame.origin.y, self.centralImage.frame.size.width, self.centralImage.frame.size.height)];
-            
-            _leftImageForPanning.backgroundColor = [UIColor yellowColor];
-            _rightImageForPanning.backgroundColor = [UIColor yellowColor];
-            
-            [self addSubview:_leftImageForPanning];
-            [self addSubview:_rightImageForPanning];
-            
         }
-        
+    
         _topImageLayer = [[CALayer alloc] init];
         _bottomImageLayer = [[CALayer alloc] init];
         _topImageLayer.frame = self.centralImage.bounds;
@@ -68,14 +68,12 @@ const int OFFSET = 250;
         self.centralImage.layer.shadowRadius = 3.0f;
         self.centralImage.layer.shadowOffset = CGSizeMake(0.0f, 2.0f);
         self.centralImage.layer.shadowOpacity = 0.5f;
-        [self addGestureRecognizer:_panGesture];
-        [self addSubview:self.centralImage];
+        [self.view addGestureRecognizer:_panGesture];
+        [self.view addSubview:self.centralImage];
     
         _animator = [[AnimationsHelper alloc] init];
-           }
-    return self;
+   
 }
-
 
 -(CGRect)calcPercentageOfFrame:(CGRect)frame
 {
@@ -88,24 +86,29 @@ const int OFFSET = 250;
     return CGRectMake(x, y, width, height);
 }
 
--(void)setImage:(UIImageView*)image
+-(void)setImage:(int)index
 {
        if(self.animationType == FadeInFadeOut){
     
     if(_bottomImageLayer.opacity == 0){
-        _bottomImageLayer.contents = (id)image.image.CGImage;
+     
+        UIImage* i = _data[index];
+        _bottomImageLayer.contents = (id) i.CGImage;
+
         [_animator fadeOutView:_topImageLayer withDuration:2.0];
         [_animator fadeInView:_bottomImageLayer withDuration:2.0];
        
     }else{
-        _topImageLayer.contents = (id)image.image.CGImage;
+        UIImage* i = _data[index];
+        _topImageLayer.contents = (id) i.CGImage;
+       
         [_animator fadeOutView:_bottomImageLayer withDuration:2.0];
         [_animator fadeInView:_topImageLayer withDuration:2.0];
     }
         
     }else if(self.animationType == SlideInNewPicture && self.animationType != PanGesture){
-    
-        _secondImage.layer.contents = (id)image.image.CGImage;
+        UIImage* i = _data[index];
+        _secondImage.layer.contents = (id) i.CGImage;
         
         [_animator slideInFromLeft:_secondImage withDuration:1.0 andDelay:0.2 andSpeed:1.0 andSpace:270.0];
         [_animator slideInFromLeft:self.centralImage withDuration:1.0 andDelay:0.0 andSpeed:1.0 andSpace:300.0];
@@ -114,16 +117,42 @@ const int OFFSET = 250;
     }else if(self.animationType == PanGesture){
         
         if(_bottomImageLayer.opacity == 0){
-            _bottomImageLayer.contents = (id)image.image.CGImage;
+         
+            UIImage* i = _data[index];
+ 
+            _bottomImageLayer.contents = (id) i.CGImage;
             [_animator fadeOutView:_topImageLayer withDuration:2.0];
             [_animator fadeInView:_bottomImageLayer withDuration:2.0];
             
         }else{
-            _topImageLayer.contents = (id)image.image.CGImage;
+            
+            UIImage* i = _data[index];
+            _topImageLayer.contents = (id) i.CGImage;
             [_animator fadeOutView:_bottomImageLayer withDuration:2.0];
             [_animator fadeInView:_topImageLayer withDuration:2.0];
         }
         
+        if(index == 0){
+            
+            UIImage* p = [_data lastObject];
+            UIImage* n = [_data objectAtIndex:1];
+            _leftImageForPanning.layer.contents = (id) p.CGImage;
+            _rightImageForPanning.layer.contents = (id) n.CGImage;
+            
+        }else if(index == _data.count - 1){
+            
+            UIImage* p = [_data objectAtIndex:_data.count - 1];
+            UIImage* n = [_data firstObject];
+            _leftImageForPanning.layer.contents = (id) p.CGImage;
+            _rightImageForPanning.layer.contents = (id) n.CGImage;
+            
+        }else{
+            UIImage* p = [_data objectAtIndex:index - 1];
+            UIImage* n = [_data objectAtIndex:index + 1];
+            _leftImageForPanning.layer.contents = (id) p.CGImage;
+            _rightImageForPanning.layer.contents = (id) n.CGImage;
+        }
+     
     }
   
 }
@@ -132,36 +161,76 @@ const int OFFSET = 250;
 {
     
     if(self.animationType == PanGesture){
+
+        UIView *currentDraggableView;
+        UIView *viewToTheLeft;
+        UIView *viewToTheRight;
+        
     CGPoint translation = [sender translationInView: sender.view];
-    
-    self.centralImage.center=CGPointMake(self.centralImage.center.x+translation.x, self.centralImage.center.y);
-    
-    [sender setTranslation:CGPointMake(0, 0) inView:sender.view];
-       
-        CGFloat point =  self.centralImage.center.x;
-        CGFloat center =[[UIScreen mainScreen] bounds].size.width /2;
-        NSLog(@"%f", point);
-        NSLog(@"%f", center);
+    CGPoint pointOnView = [sender locationInView:sender.view];
+        
+       //check which view is tapped
+        if(CGRectContainsPoint(self.centralImage.frame, pointOnView)){
+            
+            currentDraggableView = self.centralImage;
+            viewToTheLeft = _leftImageForPanning;
+            viewToTheRight = _rightImageForPanning;
+            
+        }else if(CGRectContainsPoint(_leftImageForPanning.frame, pointOnView)){
+            
+            currentDraggableView = _leftImageForPanning;
+            viewToTheRight = self.centralImage;
+            viewToTheLeft = _rightImageForPanning;
+         
+        }else if(CGRectContainsPoint(_rightImageForPanning.frame, pointOnView)){
+            
+            currentDraggableView = _rightImageForPanning;
+            viewToTheLeft = self.centralImage;
+            viewToTheRight = _leftImageForPanning;
+        }
+        
+        currentDraggableView.center=CGPointMake(currentDraggableView.center.x+translation.x, currentDraggableView.center.y);
+       [sender setTranslation:CGPointMake(0, 0) inView:sender.view];
 
         if(sender.state == UIGestureRecognizerStateEnded)
         {
-            if(self.centralImage.center.x < 0){
+            if(currentDraggableView.center.x < 0){
                 
-                [_animator slideImageLeft:self.centralImage];
-                [_animator setImageToCenter:_rightImageForPanning];
+                [_animator slideImageLeft:currentDraggableView];
+                [_animator setImageToCenter:viewToTheRight];
+                viewToTheLeft.center = CGPointMake(484, 132);
+             
+            }else if(currentDraggableView.center.x > [[UIScreen mainScreen] bounds].size.width){
                 
-            }else if(self.centralImage.center.x > [[UIScreen mainScreen] bounds].size.width){
+                [_animator slideImageRight:currentDraggableView];
+                [_animator setImageToCenter:viewToTheLeft];
                 
-                [_animator slideImageRight:self.centralImage];
-                  [_animator setImageToCenter:_leftImageForPanning];
-                
+                 viewToTheRight.center = CGPointMake(-164, 132);
             }else{
                 
-                [_animator setImageToCenter:self.centralImage];
+                [_animator setImageToCenter:currentDraggableView];
                 
             }
+
         }
     }
+}
+
+-(void)createHelperImagesForPanning
+{
+    //CREATE TWO VIEWS LEFT AND RIGHT OF THE CENTRAL ONE SO THEY CAN COME WHEN YOU PAN THE CENTRAL IMAGE
+    _leftImageForPanning = [[UIView alloc] initWithFrame:CGRectMake(self.centralImage.frame.origin.x - (self.centralImage.frame.size.width + 100), self.centralImage.frame.origin.y, self.centralImage.frame.size.width, self.centralImage.frame.size.height)];
+    
+    _rightImageForPanning = [[UIView alloc] initWithFrame:CGRectMake(self.centralImage.frame.origin.x - (-self.centralImage.frame.size.width - 100), self.centralImage.frame.origin.y, self.centralImage.frame.size.width, self.centralImage.frame.size.height)];
+    
+    [self.view addSubview:_leftImageForPanning];
+    [self.view addSubview:_rightImageForPanning];
+  
+}
+
+-(void)setData:(NSMutableArray*) data
+{
+    _data = data;
 }
 
 

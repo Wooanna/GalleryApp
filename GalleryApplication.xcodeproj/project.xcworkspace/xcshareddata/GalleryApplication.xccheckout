@@ -10,6 +10,8 @@
 	<string>GalleryApplication</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>43C68177D450FE667B985AB6EF184EA49ECBEBA8</key>
+		<string>https://github.com/Wooanna/GalleryApp.git</string>
 		<key>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</key>
 		<string>https://github.com/Wooanna/SelectedImageDelegate.git</string>
 	</dict>
@@ -17,17 +19,27 @@
 	<string>GalleryApplication.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</key>
+		<key>43C68177D450FE667B985AB6EF184EA49ECBEBA8</key>
 		<string>../..</string>
+		<key>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</key>
+		<string>../../../SelectedImageDelegate</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/Wooanna/SelectedImageDelegate.git</string>
+	<string>https://github.com/Wooanna/GalleryApp.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E4EB89F7D7BA47B1F74F14DD5258735D922D9E4D</string>
+	<string>43C68177D450FE667B985AB6EF184EA49ECBEBA8</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>43C68177D450FE667B985AB6EF184EA49ECBEBA8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>GalleryApp</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

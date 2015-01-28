@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ImageViewer : UIView <UIGestureRecognizerDelegate>
+@interface ImageViewer : UIViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIView* centralImage;
 
@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, AnimationType)
 
 @property (nonatomic, assign) AnimationType animationType;
 
--(void)setImage:(UIImageView*)image;
+-(void)setImage:(int)index;
+
+-(void)setData:(NSMutableArray*) data;
 
 @end

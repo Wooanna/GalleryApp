@@ -10,7 +10,21 @@
 
 @implementation AnimationsHelper{
 
-    //void (^completion)(UIView* view);
+    CGPoint centralPosition;
+    CGPoint leftPosition;
+    CGPoint rightPosition;
+    
+}
+-(instancetype)init
+{
+  self = [super init];
+    if(self){
+        centralPosition = CGPointMake([[UIScreen mainScreen] bounds].size.width /2, 132 );
+        rightPosition = CGPointMake([[UIScreen mainScreen] bounds].size.width * 2, 132 );
+        leftPosition = CGPointMake([[UIScreen mainScreen] bounds].size.width * -2, 132 );
+    }
+    
+    return self;
 }
 
 -(void)fadeInView:(CALayer*)layer withDuration:(int)duration
@@ -54,8 +68,11 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                      
-                         view.center = CGPointMake([[UIScreen mainScreen] bounds].size.width /2, view.center.y);
+                         CGFloat f = view.center.y;
+                         
+                         NSLog(@"fffffffffff%f", f);
+                         view.center = centralPosition;
+                         // view.center = CGPointMake([[UIScreen mainScreen] bounds].size.width /2, view.center.y);
                      } completion:^(BOOL finished) {
                          
                      }];
@@ -68,7 +85,8 @@
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                         
-                         view.center = CGPointMake([[UIScreen mainScreen] bounds].size.width * 2, view.center.y);
+                         view.center = rightPosition;
+                         //view.center = CGPointMake([[UIScreen mainScreen] bounds].size.width * 2, view.center.y);
                      } completion:^(BOOL finished) {
                          
                      }];
@@ -81,7 +99,8 @@
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          
-                         view.center = CGPointMake([[UIScreen mainScreen] bounds].size.width * -2, view.center.y);
+                         view.center = leftPosition;
+                        // view.center = CGPointMake([[UIScreen mainScreen] bounds].size.width * -2, view.center.y);
                      } completion:^(BOOL finished) {
                          
                      }];

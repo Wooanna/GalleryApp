@@ -60,13 +60,13 @@ int const CELL_MARGIN = 20;
     [_collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:@"collectionViewCell"];
     [_collectionView setBackgroundColor:[UIColor clearColor]];
     _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-   
-
     [self.view addSubview:_collectionView];
     
-    _imageViewer = [[ImageViewer alloc] initWithFrame:CGRectMake(0, _collectionView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _collectionView.frame.size.height)];
-     _imageViewer.animationType = PanGesture;
-    [self.view addSubview:_imageViewer];
+    _imageViewer = [[ImageViewer alloc] init];
+    _imageViewer.animationType = PanGesture;
+    _imageViewer.view.frame = CGRectMake(0, _collectionView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _collectionView.frame.size.height);
+    [_imageViewer setData:_data];
+    [self.view addSubview:_imageViewer.view];
 }
 
 -(void)setData:(NSMutableArray*)data
@@ -108,14 +108,20 @@ int const CELL_MARGIN = 20;
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    PhotoCell *datasetCell =(PhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
+
+//    NSIndexPath *prevIndexPath = [[NSIndexPath alloc] initWithIndexes: indexPath.section length:indexPath.row - 1];
+//    NSIndexPath *nextIndexPath = [[NSIndexPath alloc] initWithIndexes: indexPath.section length:indexPath.row + 1];
     
-    NSLog([NSString stringWithFormat:@"%ld", (long)indexPath.section]);
+    
+//    PhotoCell *previousCell = (PhotoCell *)[collectionView cellForItemAtIndexPath:prevIndexPath];
+//    PhotoCell *nextCell = (PhotoCell *)[collectionView cellForItemAtIndexPath:nextIndexPath];
+    
+    PhotoCell *datasetCell =(PhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     [_trgt performSelector:_str withObject: datasetCell.photo];
     
     
-    [_imageViewer setImage:datasetCell.photo];
+    [_imageViewer setImage:indexPath.section];
    
 }
 
